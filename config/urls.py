@@ -18,8 +18,8 @@ urlpatterns = [
 
     # Your stuff: custom urls includes go here
     url(r'^characters/', include('seraphim.characters.urls')),
-    url(r'^groups/', include('seraphim.groups.urls')),
-    url(r'^tracker/', include('seraphim.tracker.urls')),
+    #url(r'^groups/', include('seraphim.groups.urls')),
+    #url(r'^tracker/', include('seraphim.tracker.urls')),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
