@@ -19,3 +19,7 @@
 [hidden][style="display: block;"] {
   display: block !important;
 }
+
+.nodecor:hover {
+  text-decoration: none;
+}
