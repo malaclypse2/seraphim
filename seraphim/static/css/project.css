@@ -22,7 +22,9 @@
 
 .nodecor:hover {
   text-decoration: inherit;
+  color: inherit;
 }
 .nodecor {
   text-decoration: inherit;
+  color: inherit;
 }
