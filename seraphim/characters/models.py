@@ -3,6 +3,8 @@ from django.db import models
 # Create your models here.
 class CharacterIcon(models.Model):
     url = models.URLField()
+    def __str__(self):
+        return self.url.rsplit('/', 1)[1]
 
 class Character(models.Model):
     icon = models.ForeignKey(CharacterIcon)
