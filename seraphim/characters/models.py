@@ -14,3 +14,4 @@ class Character(models.Model):
     base_hp = models.IntegerField()
     def __str__(self):
         return '{self.name}, {self.profession}:{self.level} - {self.base_hp} HP'.format(self=self)
+    
