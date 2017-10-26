@@ -2,7 +2,6 @@
 {% block title %}Character Detail{% endblock %}
 {% block content %}
 <div class="container">
-    <h2>Characters</h2>
     <div class="row">
         <div class="col-md-12 mb-1 clearfix nodecor" style="background-color:black;">
             <!--- Outer Card -->
@@ -17,7 +16,6 @@
                     <div class="row">
                         <div class="col-sm-6">{{character.profession}}: {{character.level}}</div>
                         <div class="col-sm-6 text-right">
-                            {{character.base_hp}}/
                             <b>{{character.base_hp}}</b> HP
                         </div>
                     </div>
