@@ -12,7 +12,7 @@ urlpatterns = [
     ),
     # e.g.: /characters/3/
     url(
-        regex=r'^(?P<id>[0-9]+)/$',
+        regex=r'^(?P<pk>[0-9]+)/$',
         view=views.CharacterDetailView.as_view(),
         name='detail'
     ),
