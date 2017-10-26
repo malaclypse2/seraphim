@@ -4,8 +4,23 @@
 {% block content %}
 <div class="container">
     <h2>Characters</h2>
-
     <div class="row">
+        {% for character in object_list %}
+            <div class="col-md-6 mb-1" style="background-color:black;">
+                <div class="row">
+                    <div class="col-2" style="background-color:white;">
+                        <img class="img img-responsive" src="/{{character.icon.url}}" />
+                    </div>
+                    <div class="col-10" style="background-color:aliceblue;">
+                        <h3>{{character.name}}</h3>
+                        <div class="row">
+                            <div class="col-8">{{character.profession}}: {{character.level}}</div>
+                            <div class="col-4">{{character.base_hp}}/{{character.base_hp}} HP</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
         <div class="col-md-6 mb-1" style="background-color:black;">
             <div class="row">
                 <div class="col-2" style="background-color:white;">
