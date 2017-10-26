@@ -2,24 +2,23 @@
 {% block title %}Character Detail{% endblock %}
 {% block content %}
 <div class="container">
-    <div class="col clearfix" style="background-color:black;">
+    <div class="col-12 clearfix" style="background-color:black;">
         <!--- Outer Card -->
-            <div class="col-3" style="background-color:white;">
-                <!--- Left Side Icon -->
-                <img class="img img-responsive" src="/{{character.icon.url}}" />
-            </div>
-            <div class="col-9 clearfix" style="background-color:aliceblue;">
-                <!--- Right Side Info -->
-                <h3>{{character.name}}</h3>
-                <div class="row">
-                    <div class="col-sm-6">{{character.profession}}: {{character.level}}</div>
-                    <div class="col-sm-6 text-right">
-                        {{character.base_hp}}/
-                        <b>{{character.base_hp}}</b> HP
-                    </div>
+        <div class="col-3" style="background-color:white;">
+            <!--- Left Side Icon -->
+            <img class="img img-responsive" src="/{{character.icon.url}}" />
+        </div>
+        <div class="col-9 clearfix" style="background-color:aliceblue;">
+            <!--- Right Side Info -->
+            <h3>{{character.name}}</h3>
+            <div class="row">
+                <div class="col-sm-6">{{character.profession}}: {{character.level}}</div>
+                <div class="col-sm-6 text-right">
+                    {{character.base_hp}}/
+                    <b>{{character.base_hp}}</b> HP
                 </div>
             </div>
-    </div>
+        </div>
     </div>
 
 </div>
