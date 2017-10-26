@@ -2,6 +2,8 @@
 {% block title %}Character Detail{% endblock %}
 {% block content %}
 <div class="container">
-    <img class="img img-responsive" src="/{{character.icon.url}}" />
+    <img class="img" src="/{{character.icon.url}}" />
+    <h1>{{character.name}}</h1>
+    <h2>{{character.profession}}: {{character.level}}</h2>
 </div>
  {% endblock content %}
