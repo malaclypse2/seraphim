@@ -7,7 +7,7 @@
     <div class="row" href="#">
         {% for character in object_list %}
             <div class="col-md-6 mb-1 linked-col clearfix" style="background-color:black;"> <!--- Outer Card -->
-                <a href="{% url 'characters:detail' character.id %}"
+                <a href="{% url 'characters:detail' character.id %}"></a>
                 <div class="row">
                     <div class="col-3" style="background-color:white;"> <!--- Left Side Icon -->
                         <img class="img img-responsive" src="/{{character.icon.url}}" />
