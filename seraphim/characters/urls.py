@@ -8,7 +8,7 @@ urlpatterns = [
     url(
         regex=r'^$',
         view=views.CharacterListView.as_view(),
-        name='index'
+        name='list'
     ),
     # e.g.: /characters/3/
     url(
