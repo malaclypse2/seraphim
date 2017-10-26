@@ -13,6 +13,7 @@ def index(request):
 
 class CharacterDetailView(LoginRequiredMixin, DetailView):
     model = Character
+    pk = 'character_id'
 
 class CharacterListView(LoginRequiredMixin, ListView):
     model = Character
