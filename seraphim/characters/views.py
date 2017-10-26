@@ -11,9 +11,10 @@ from django.http import HttpResponse
 def index(request):
     return HttpResponse("Hello, world. You're at the characters index.")
 
-class CharacterDetailView(LoginRequiredMixin, DetailView):
+def CharacterDetailView(LoginRequiredMixin, DetailView):
     model = Character
     pk = 'character_id'
 
 class CharacterListView(LoginRequiredMixin, ListView):
     model = Character
+    
