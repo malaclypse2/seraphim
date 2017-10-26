@@ -21,8 +21,8 @@
 }
 
 .nodecor:hover {
-  text-decoration: none;
+  text-decoration: inherit;
 }
 .nodecor {
-  text-decoration: none;
+  text-decoration: inherit;
 }
