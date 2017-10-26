@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container">
     <h2>Characters</h2>
-    <div class="row" href="#">
+    <div class="row" >
         {% for character in object_list %}
             <a class="col-md-6 mb-1 clearfix nodecor" href="{% url 'characters:detail' character.id %}" style="background-color:black;"> <!--- Outer Card -->
                 <div class="row">
