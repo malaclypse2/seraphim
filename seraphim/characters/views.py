@@ -23,7 +23,6 @@ class CharacterCreate(LoginRequiredMixin, CreateView):
 class CharacterUpdate(LoginRequiredMixin, UpdateView):
     model = Character
     success_url = reverse_lazy('characters:list')
-    fields = '__all__'
     form_class = CharacterForm
 
 class CharacterDelete(LoginRequiredMixin, DeleteView):
