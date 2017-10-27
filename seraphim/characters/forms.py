@@ -7,6 +7,8 @@ class CharacterForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(CharacterForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-        self.helper.add_input(Submit('save', 'save'))
+        self.helper.form_class='col-sm-4'
+        self.helper.field_class='col-sm-8'
+        self.helper.layout.append(Submit('save', 'save'))
     class Meta:
         model = Character
