@@ -13,8 +13,8 @@ class Character(models.Model):
     profession = models.CharField('class', max_length=50)
     level = models.IntegerField()
     base_hp = models.IntegerField()
-    av_short = models.CharField(max_length=50)
-    av_long = models.TextField()
+    av_short = models.CharField(max_length=50, default = 'AV: ')
+    av_long = models.TextField(default = 'AV: ')
     def __str__(self):
         return '{self.name}, {self.profession}:{self.level} - {self.base_hp} HP'.format(self=self)
     def get_absolute_url(self):
