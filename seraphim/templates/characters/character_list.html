@@ -6,7 +6,7 @@
     <h2>Edit Characters</h2>
     <div class="row" >
         {% for character in object_list %}
-            <a class="col-md-6 mb-1 nodecor" href="{% url 'characters:detail' character.id %}" style="background-color:black;"> <!--- Outer Card -->
+            <a class="col-md-6 mb-1 nodecor" href="{% url 'characters:update' character.id %}" style="background-color:black;"> <!--- Outer Card -->
                 <div class="row">
                     <div class="col-3" style="background-color:white;"> <!--- Left Side Icon -->
                         <img class="img img-responsive" src="/{{character.icon.url}}" />
@@ -15,7 +15,7 @@
                         <h3>{{character.name}}</h3>
                         <div class="row">
                             <div class="col-7">{{character.profession}}: {{character.level}}</div>
-                            <div class="col-5 text-right">
+                            <div class="col-52222222 text-right">
                                 <b>{{character.base_hp}}</b> HP
                             </div>
                         </div>

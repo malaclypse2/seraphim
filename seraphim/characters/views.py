@@ -1,5 +1,5 @@
-from django.core.urlresolvers import reverse
-from django.views.generic import DetailView, ListView, RedirectView, UpdateView
+from django.core.urlresolvers import reverse_lazy
+from django.views.generic import DetailView, ListView, UpdateView, CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -7,12 +7,24 @@ from django.http import HttpResponse
 from .models import Character
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the characters index.")
-
-class CharacterDetailView(LoginRequiredMixin, DetailView):
+class CharacterDetail(LoginRequiredMixin, DetailView):
     model = Character
     pk = 'id'
 
-class CharacterListView(LoginRequiredMixin, ListView):
+class CharacterList(LoginRequiredMixin, ListView):
     model = Character
+
+class CharacterCreate(LoginRequiredMixin, CreateView):
+    model = Character
+    success_url = reverse_lazy('character_list')
+    fields = '__all__'
+
+class CharacterUpdate(LoginRequiredMixin, UpdateView):
+    model = Character
+    success_url = reverse_lazy('character_list')
+    fields = '__all__'
+
+class CharacterDelete(LoginRequiredMixin, DeleteView):
+    model = Character
+    success_url = reverse_lazy('character_list')
+

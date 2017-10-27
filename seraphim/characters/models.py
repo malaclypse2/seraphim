@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 # Create your models here.
 class CharacterIcon(models.Model):
@@ -14,4 +15,6 @@ class Character(models.Model):
     base_hp = models.IntegerField()
     def __str__(self):
         return '{self.name}, {self.profession}:{self.level} - {self.base_hp} HP'.format(self=self)
+    def get_absolute_url(self):
+        return reverse('character_edit', kwargs={'pk': self.pk})
     
