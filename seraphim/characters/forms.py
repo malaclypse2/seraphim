@@ -9,6 +9,6 @@ class CharacterForm(ModelForm):
         self.helper = FormHelper(self)
         self.helper.form_class='col-sm-4'
         self.helper.field_class='col-sm-8'
-        self.helper.layout.append(Submit('save', 'save'))
+        self.helper.add_input(Submit('submit', 'Submit'))
     class Meta:
         model = Character
