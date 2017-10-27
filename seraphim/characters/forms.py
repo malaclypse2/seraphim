@@ -8,10 +8,10 @@ class CharacterForm(ModelForm):
         super(CharacterForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.wrapper_class='row'
+        self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-sm-4'
         self.helper.field_class = 'col-sm-8'
         self.helper.add_input(Submit('submit', 'Save'))
-        self.helper.field_template = 'bootstrap4/field.html'
     class Meta:
         model = Character
         fields = '__all__'
