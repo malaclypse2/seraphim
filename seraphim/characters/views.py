@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from .models import Character
+from .forms import CharacterForm
 
 
 class CharacterDetail(LoginRequiredMixin, DetailView):
@@ -23,6 +24,7 @@ class CharacterUpdate(LoginRequiredMixin, UpdateView):
     model = Character
     success_url = reverse_lazy('characters:list')
     fields = '__all__'
+    form_class = CharacterForm
 
 class CharacterDelete(LoginRequiredMixin, DeleteView):
     model = Character
