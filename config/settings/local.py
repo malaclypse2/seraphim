@@ -26,7 +26,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY', default='WuDn^K!Fer;.jEC?!&{Q!-r7M%&4Wn5LB
 # ------------------------------------------------------------------------------
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['seraphim.wormhole.ath.cx', '192.168.10.100'])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['seraphim.wormhole.ath.cx', '192.168.10.100', 'localhost'])
 # END SITE CONFIGURATION
 
 # Mail settings
