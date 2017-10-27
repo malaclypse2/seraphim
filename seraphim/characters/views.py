@@ -14,6 +14,7 @@ class CharacterDetail(LoginRequiredMixin, DetailView):
 
 class CharacterList(LoginRequiredMixin, ListView):
     model = Character
+    ordering = [icon, name]
 
 class CharacterCreate(LoginRequiredMixin, CreateView):
     model = Character
