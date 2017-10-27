@@ -13,3 +13,4 @@ class CharacterForm(ModelForm):
         self.helper.add_input(Submit('submit', 'Submit'))
     class Meta:
         model = Character
+        fields = '__all__'
