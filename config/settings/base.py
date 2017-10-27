@@ -112,7 +112,7 @@ MANAGERS = ADMINS
 # Uses django-environ to accept uri format
 # See: https://django-environ.readthedocs.io/en/latest/#supported-types
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres:///seraphim'),
+    'default': env.db('DATABASE_URL', default='postgres://seraphim:secret_sera@192.168.10.100/seraphim'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
