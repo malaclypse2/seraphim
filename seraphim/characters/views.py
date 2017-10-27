@@ -16,15 +16,15 @@ class CharacterList(LoginRequiredMixin, ListView):
 
 class CharacterCreate(LoginRequiredMixin, CreateView):
     model = Character
-    success_url = reverse_lazy('list')
+    success_url = reverse_lazy('character_list')
     fields = '__all__'
 
 class CharacterUpdate(LoginRequiredMixin, UpdateView):
     model = Character
-    success_url = reverse_lazy('list')
+    success_url = reverse_lazy('character_list')
     fields = '__all__'
 
 class CharacterDelete(LoginRequiredMixin, DeleteView):
     model = Character
-    success_url = reverse_lazy('list')
+    success_url = reverse_lazy('character_list')
 
