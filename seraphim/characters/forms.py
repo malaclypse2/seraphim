@@ -11,6 +11,7 @@ class CharacterForm(ModelForm):
         self.helper.label_class = 'col-sm-4'
         self.helper.field_class = 'col-sm-8'
         self.helper.add_input(Submit('submit', 'Save'))
+        self.helper.field_template = 'bootstrap4/field.html'
     class Meta:
         model = Character
         fields = '__all__'
