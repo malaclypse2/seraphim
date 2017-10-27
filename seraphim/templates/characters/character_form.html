@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="container">
-    <form method="post"> {% csrf_token %}
-        {{ form|crispy }}
-    </form>
+
+    {% crispy form form.helper %}
+
 </div>
 {% endblock content %}
