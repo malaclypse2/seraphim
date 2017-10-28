@@ -12,7 +12,7 @@ class Day(models.Model):
 
 class Combat(models.Model):
     game_day = models.ForeignKey(Day, on_delete=models.CASCADE)
-
+    name = models.CharField(max_length=200)
     def __str__(self):
         return '{self.name}, {self.profession}:{self.level} - {self.base_hp} HP'.format(self=self)
 
