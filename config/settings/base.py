@@ -56,7 +56,9 @@ LOCAL_APPS = [
     # custom users app
     'seraphim.users.apps.UsersConfig',
     # Your stuff: custom apps go here
-    'seraphim.characters.apps.CharactersConfig'
+    'seraphim.characters.apps.CharactersConfig',
+    'seraphim.groups.apps.GroupsConfig',
+    'seraphim.tracker.apps.TrackerConfig',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
