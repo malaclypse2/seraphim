@@ -34,12 +34,19 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <a class="col-3 btn btn-danger" href="#">Damage</a>
-        <a class="col-3 btn btn-success" href="#">Heal</a>
-        <a class="col-3 btn btn-info" href="#">Status Effect</a>
-        <a class="col-3 btn btn-info" href="#">Bandage</a>
-    </div>
+        <div class="btn-group col-12" role="group" aria-label="actions">
+            <a class="col-3 btn btn-danger" href="#">Damage</a>
+            <a class="col-3 btn btn-success" href="#">Heal</a>
+            <div class="btn-grp" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false"> Other </button>
+                <div class="dropdown-menu col-6" aria-labelledby="btnGroupDrop1">
+                    <a class="col-3 btn btn-info" href="#">Effect</a>
+                    <a class="col-3 btn btn-info" href="#">Bandage</a>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- end row-->
 </div>
 {% endblock content %}
