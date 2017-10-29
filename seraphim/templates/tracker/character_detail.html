@@ -4,8 +4,7 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        {% for character, current_hp, max_hp in combat.combat_state %}
-        <a class="col-md-6 mb-2 nodecor" href="#" style="background-color:white;">
+        <div class="col-12 mb-2 nodecor"  style="background-color:white;">
             <!--- Outer Card -->
             <div class="row">
                 <div class="col-3" style="background-color:white;">
@@ -24,11 +23,21 @@
                             <span class="{{current_hp.style}}"> {{current_hp}} </span> /
                             <span class="small {{max_hp.style}}">{{max_hp}}</span>&nbsp;HP
                         </h4>
+                        <div class="col-7">
+                            {{character.av_long}}
+                        </div>
+                        <div class="col-5 text-right">
+                            <div>{{damage}} Damage</div>
+                            <div>{{total_h}} Total Healing</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </a>
-        {% endfor %}
+        </div>
     </div>
+    <a class="btn btn-danger" href="#">Damage</a>
+    <a class="btn btn-success" href="#">Heal</a>
+    <a class="btn btn-info" href="#">Status Effect</a>
+    <a class="btn btn-info" href="#">Bandage</a>
 </div>
 {% endblock content %}

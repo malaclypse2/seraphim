@@ -4,8 +4,8 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        {% for character, current_hp, max_hp in combat_state %}
-        <a class="col-md-6 mb-2 nodecor" href="#" style="background-color:white;">
+        {% for character, current_hp, max_hp, total_h in combat_state %}
+        <a class="col-md-6 mb-2 nodecor" href="{% url 'tracker:manage_character' combat.id character.id %}" style="background-color:white;">
             <!--- Outer Card -->
             <div class="row">
                 <div class="col-3" style="background-color:white;">

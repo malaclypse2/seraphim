@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template import loader
 
 from .models import Combat, StatusEffect, Wound, Heal
+from seraphim.characters.models import Character
 
 
 
@@ -24,9 +25,16 @@ def manage_combat(request, pk):
 
 def character_detail(request, combat_pk, character_pk):
     context = {}
-    context['combat'] = get_object_or_404(Combat, pk=combat_pk)
-    context['character'] = get_object_or_404('characters.Character', pk=character_pk)
-    return render(request, 'tracker/character_detail.html')
+    combat = get_object_or_404(Combat, pk=combat_pk)
+    character = get_object_or_404(Character, pk=character_pk)
+    current_hp, max_hp, total_h = character_state(combat, character)
+    context['combat'] = combat
+    context['character'] = character
+    context['current_hp'] = current_hp
+    context['max_hp'] = max_hp
+    context['damage'] = max_hp.hp - current_hp.hp
+    context['total_h'] = total_h
+    return render(request, 'tracker/character_detail.html', context)
 
 
 # Pre-calculate some information to pass along to our templates
@@ -37,19 +45,29 @@ def combat_state(combat):
     """
     state = []
     for character in combat.game_day.group.members.all():
-        max_hp = Max_hp(character.base_hp)
-        for effect in StatusEffect.objects.filter(character=character, combat=combat, effect_typ__typ='MAX_HP'):
-            max_hp.hp += effect.effect_val
-        current_hp = Current_hp(max_hp.hp)
-        for wound in Wound.objects.filter(character=character, combat=combat):
-            current_hp.hp -= wound.amount
-        for heal in Heal.objects.filter(character=character, combat=combat):
-            current_hp.hp += heal.amount
-        state.append((character, current_hp, max_hp))
+        current_hp, max_hp, total_h = character_state(combat, character)
+        state.append((character, current_hp, max_hp, total_h))
         state.sort(key=lambda state: state[0].level, reverse=True)
         state.sort(
             key=lambda state: state[1].max_hp - state[1].hp, reverse=True)
     return state
+
+def character_state(combat, character):
+    """
+        Get the combat status of a single character, as a tuple of
+        current_hp, max_hp, total healing
+    """
+    max_hp = Max_hp(character.base_hp)
+    total_h = 0
+    for effect in StatusEffect.objects.filter(character=character, combat=combat, effect_typ__typ='MAX_HP'):
+        max_hp.hp += effect.effect_val
+    current_hp = Current_hp(max_hp.hp)
+    for wound in Wound.objects.filter(character=character, combat=combat):
+        current_hp.hp -= wound.amount
+    for heal in Heal.objects.filter(character=character, combat=combat):
+        current_hp.hp += heal.amount
+        total_h += heal.amount
+    return current_hp, max_hp, total_h
 
 
 class Max_hp:
