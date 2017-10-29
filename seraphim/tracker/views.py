@@ -68,7 +68,7 @@ def add_wound(request, combat_pk, character_pk):
         if form.is_valid():
             #process as needed
             form.save()
-    return character_detail(request, combat_pk, character_pk)
+    return manage_combat(request, combat_pk)
 
 
 def add_heal(request, combat_pk, character_pk):
@@ -77,7 +77,7 @@ def add_heal(request, combat_pk, character_pk):
         if form.is_valid():
             #process as needed
             form.save()
-    return character_detail(request, combat_pk, character_pk)
+    return manage_combat(request, combat_pk)
 
 # Pre-calculate some information to pass along to our templates
 def combat_state(combat):
