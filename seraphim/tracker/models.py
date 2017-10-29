@@ -13,6 +13,7 @@ class Day(models.Model):
 class Combat(models.Model):
     game_day = models.ForeignKey(Day, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
+    in_progress = models.BooleanField(default=True)
     def __str__(self):
         return '{self.name}'.format(self=self)
 

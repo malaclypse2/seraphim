@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block title %}Seraphim{% endblock %} {% block content %}
+
+<div class="container">
+    <h2>Edit Groups</h2>
+    
+    <div class="list-group">
+        {% for group in object_list %}
+        <a class="list-group-item" href="{% url 'groups:update' group.id %}"> {{group}} ({{group.members.all.count}} members) </a>
+        {% endfor %}
+    </div>
+
+    <a type="button" class="btn btn-primary" href="{% url 'groups:create' %}">New Group</a>
+</div>
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Seraphim{% endblock %} 
+
+{% block content %}
+<div class="container">
+    <h5>Manage combats in progress</h5>
+    <div class="list-group">
+        {% for combat in combat_list_in_progress %}
+        <a class="list-group-item" href="#"> {{combat}} ({{combat.game_day.group.members.all.count}} {{combat.game_day.group}}) </a>
+        {% endfor %}
+    </div>
+
+    <h5>Manage combats in progress</h5>
+    <div class="list-group">
+        {% for combat in combat_list_complete %}
+        <a class="list-group-item" href="#"> {{combat}} ({{combat.game_day.group.members.all.count}} {{combat.game_day.group}}) </a>
+        {% endfor %}
+    </div>
+    <div>
+        <a type="button" class="btn btn-primary" href="#">New Combat</a>
+    </div>
+</div>
+{% endblock content %}

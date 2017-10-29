@@ -1,0 +1,23 @@
+{% extends "base.html" %} 
+{% load crispy_forms_tags %} 
+{% block title %}Group Detail{% endblock %} 
+
+{% block content %}
+<form class="form" method="post">
+    <!-- First, the form built by crispy forms -->
+    {% crispy form form.helper%}
+
+    <!-- Then, add some button to save/delete -->
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+            {% if group.id %}
+            <a class="btn btn-danger" href="{% url 'groups:delete' group.id %}">Delete</a>
+            {% else %}
+            <a class="btn btn-secondary" href="{% url 'groups:list' %}">Cancel</a>
+            {% endif %}
+        </div>
+    </div>
+</form>
+
+{% endblock content %}
