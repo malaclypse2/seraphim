@@ -21,6 +21,11 @@ urlpatterns = [
         regex=r'^manage/(?P<combat_pk>[0-9]+)/(?P<character_pk>[0-9]+)/$',
         view=views.character_detail,
         name='manage_character'
-
+    ),
+    # e.g., /tracker/manage/3/12/wound
+    url(
+        regex=r'^manage/(?P<combat_pk>[0-9]+)/(?P<character_pk>[0-9]+)/wound$',
+        view=views.manage_wound,
+        name='manage_wound'
     ),
 ]

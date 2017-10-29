@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import DetailView, ListView, UpdateView, CreateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template import loader
 
 from seraphim.characters.models import Character
@@ -35,6 +37,19 @@ def character_detail(request, combat_pk, character_pk):
     context['damage'] = max_hp.hp - current_hp.hp
     context['total_h'] = total_h
     return render(request, 'tracker/character_detail.html', context)
+
+def manage_wound(request, combat_pk, character_pk):
+    context = {}
+    combat = get_object_or_404(Combat, pk=combat_pk)
+    character = get_object_or_404(Character, pk=character_pk)
+    current_hp, max_hp, total_h = character_state(combat, character)
+    context['combat'] = combat
+    context['character'] = character
+    context['current_hp'] = current_hp
+    context['max_hp'] = max_hp
+    context['damage'] = max_hp.hp - current_hp.hp
+    context['total_h'] = total_h
+    return render(request, 'tracker/character_wounds.html', context)
 
 
 # Pre-calculate some information to pass along to our templates
