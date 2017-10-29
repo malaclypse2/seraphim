@@ -7,11 +7,11 @@
     <h5>Manage combats in progress</h5>
     <div class="list-group">
         {% for combat in combat_list_in_progress %}
-        <a class="list-group-item" href="#"> {{combat}} ({{combat.game_day.group.members.all.count}} {{combat.game_day.group}}) </a>
+        <a class="list-group-item" href="{% url 'tracker:manage' combat.id %}"> {{combat}} ({{combat.game_day.group.members.all.count}} {{combat.game_day.group}}) </a>
         {% endfor %}
     </div>
 
-    <h5>Manage combats in progress</h5>
+    <h5>View completed combats</h5>
     <div class="list-group">
         {% for combat in combat_list_complete %}
         <a class="list-group-item" href="#"> {{combat}} ({{combat.game_day.group.members.all.count}} {{combat.game_day.group}}) </a>

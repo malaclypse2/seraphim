@@ -49,3 +49,4 @@ class Heal(models.Model):
     amount = models.IntegerField()
     def __str__(self):
         return '{self.character.name}: {self.amount} HP'.format(self=self)
+
