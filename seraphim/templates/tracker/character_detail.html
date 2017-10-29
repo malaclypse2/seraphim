@@ -1,12 +1,12 @@
 {% extends "tracker/base_character_header.html" %}
 {% block title %}Seraphim Combat Manager{% endblock %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 
 <div class="btn-group" role="group" aria-label="actions">
-    {% comment %} <a class="btn btn-danger" href="{% url 'tracker:manage_wound' combat.id character.id %}">Damage</a> {% endcomment %}
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#damage-modal">Damage</button>
-    <a class="btn btn-success" href="#">Heal</a>
+    {% comment %} <a class="btn btn-danger" href="{% url 'tracker:manage_wound' combat.id character.id %}">wound</a> {% endcomment %}
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#wound-modal">Wound</button>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#heal-modal">Heal</button>
     <div class="btn-grp" role="group">
         <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false"> Other </button>
@@ -17,24 +17,56 @@
     </div>
 </div>
 
-{% comment %} Modal dialog for adding damage {% endcomment %}
-<div class="modal fade" id="damage-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{% comment %} Modal dialog for adding a wound {% endcomment %}
+<div class="modal fade" id="wound-modal" tabindex="-1" role="dialog" aria-labelledby="woundModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="woundModalLabel">Add Wound</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                This is the body of the modal window
+            <form action="{% url 'tracker:add_wound' combat.id character.id %}" method="post"> {% csrf_token %}
+                <div class="modal-body">
+                    {% comment %} <div class="form-group">
+                        <label for="wound-amount">Amount</label>
+                        <input type="number" class="form-control" name="wound-amount" id="wound-amount">
+                    </div> {% endcomment %}
+                    {% crispy woundform %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</input>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
+{% comment %} Modal dialog for adding a heal {% endcomment %}
+<div class="modal fade" id="heal-modal" tabindex="-1" role="dialog" aria-labelledby="healModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="healModalLabel">Add heal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            <form action="{% url 'tracker:add_heal' combat.id character.id %}" method="post"> {% csrf_token %}
+                <div class="modal-body">
+                    {% comment %}
+                    <div class="form-group">
+                        <label for="heal-amount">Amount</label>
+                        <input type="number" class="form-control" name="heal-amount" id="heal-amount">
+                    </div> {% endcomment %} {% crispy healform %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</input>
+                </div>
+            </form>
         </div>
     </div>
 </div>
