@@ -1,3 +1,5 @@
+import math
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView, ListView, UpdateView, CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -5,7 +7,7 @@ from django.template import loader
 
 from seraphim.characters.models import Character
 from .models import Combat, StatusEffect, Wound, Heal
-from .forms import WoundForm, HealForm
+from .forms import WoundForm, HealForm, CombatForm
 
 
 
@@ -49,26 +51,13 @@ def character_detail(request, combat_pk, character_pk):
     })
     return render(request, 'tracker/character_detail.html', context)
 
-# def manage_wound(request, combat_pk, character_pk):
-#     context = {}
-#     combat = get_object_or_404(Combat, pk=combat_pk)
-#     character = get_object_or_404(Character, pk=character_pk)
-#     current_hp, max_hp, total_h = character_state(combat, character)
-#     context['combat'] = combat
-#     context['character'] = character
-#     context['current_hp'] = current_hp
-#     context['max_hp'] = max_hp
-#     context['damage'] = max_hp.hp - current_hp.hp
-#     context['total_h'] = total_h
-#     return render(request, 'tracker/character_wounds.html', context)
-
 def add_wound(request, combat_pk, character_pk):
     if request.method == 'POST':
         form = WoundForm(request.POST)
         if form.is_valid():
             #process as needed
             form.save()
-    return manage_combat(request, combat_pk)
+    return redirect('tracker:manage', combat_pk)
 
 
 def add_heal(request, combat_pk, character_pk):
@@ -77,7 +66,41 @@ def add_heal(request, combat_pk, character_pk):
         if form.is_valid():
             #process as needed
             form.save()
+    return redirect('tracker:manage', combat_pk)
+
+
+def bandage_character(request, combat_pk, character_pk):
+    combat = get_object_or_404(Combat, pk=combat_pk)
+    character = get_object_or_404(Character, pk=character_pk)
+    if request.method == 'POST':
+        bonus = int(request.POST['bonus'])
+        skill_level = int(request.POST['skill_level'])
+    else:
+        bonus = 0
+        skill_level = 1
+    damage = 0
+    wounds = Wound.objects.filter(character=character, combat=combat, bandaged=False)
+    for wound in wounds:
+        damage += wound.amount
+        wound.bandaged = True
+        wound.save()
+    # level 1 (Rudimentary) = Heal 1 per 8 damage, plus bonus
+    # level 2 (Proficient) = Heal 1 per 7 damage, plus bonus
+    # level 3 (Expert) = Heal 1 per 6 damage, plus bonus
+    if damage > 0:
+        healing = math.ceil(damage * (1/(9-skill_level)))
+        healing += bonus
+        bandage = Wound(combat=combat, character=character, amount=-healing, bandaged=True)
+        bandage.save()
     return manage_combat(request, combat_pk)
+
+
+class CombatCreate(LoginRequiredMixin, CreateView):
+    model = Combat
+    success_url = reverse_lazy('tracker:index')
+    form_class = CombatForm
+
+
 
 # Pre-calculate some information to pass along to our templates
 def combat_state(combat):
@@ -151,5 +174,5 @@ class Current_hp:
         elif pct > 0.00:
             style += " text-danger"
         else:
-            style += " text-muted"
+            style = " text-danger "
         return style

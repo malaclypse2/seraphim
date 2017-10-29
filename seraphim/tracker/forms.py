@@ -27,3 +27,12 @@ class HealForm(ModelForm):
         model = Heal
         fields = '__all__'
 
+class CombatForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CombatForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_tag = False
+
+    class Meta:
+        model = Combat
+        fields = '__all__'

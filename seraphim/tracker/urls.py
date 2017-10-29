@@ -34,4 +34,17 @@ urlpatterns = [
         view=views.add_heal,
         name='add_heal'
     ),
+    # e.g., /tracker/manage/3/12/bandage
+    url(
+        regex=r'^manage/(?P<combat_pk>[0-9]+)/(?P<character_pk>[0-9]+)/bandage/$',
+        view=views.bandage_character,
+        name='bandage_character'
+    ),
+    # e.g. /tracker/combat/create
+    url(
+        regex=r'^manage/combat/create$',
+        view=views.CombatCreate.as_view(),
+        name='create_combat'
+    ),
+
 ]
