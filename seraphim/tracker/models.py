@@ -2,22 +2,14 @@ from django.db import models
 
 # Create your models here.
 
-class Day(models.Model):
-    crt_dttm = models.DateTimeField(auto_now_add=True)
-    desc = models.CharField(max_length=200, default='There we were...')
-    group = models.ForeignKey('groups.Group')
-    def __str__(self):
-        fmt_dttm = self.crt_dttm.strftime("%B %d, %Y %I:%M%p")
-        return '{self.desc}, ({self.group}) - created {fmt_dttm}'.format(self=self, fmt_dttm=fmt_dttm)
-
 class Combat(models.Model):
-    game_day = models.ForeignKey(Day, on_delete=models.CASCADE)
+    group = models.ForeignKey('groups.Group')
     name = models.CharField(max_length=200)
     in_progress = models.BooleanField(default=True)
     crt_dttm = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return '{self.name}'.format(self=self)
+        return '{self.name} - {self.group}'.format(self=self)
 
 class StatusEffectType(models.Model):
     typ = models.CharField(max_length=10)

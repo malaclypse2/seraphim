@@ -3,7 +3,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, HTML
 from crispy_forms.bootstrap import FormActions
 
-from .models import Combat, Day, Heal, StatusEffect, StatusEffectType, Wound
+from .models import Combat, Heal, StatusEffect, StatusEffectType, Wound
 
 
 class WoundForm(ModelForm):

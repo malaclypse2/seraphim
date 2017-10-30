@@ -111,7 +111,7 @@ def combat_state(combat):
     a list of tuples (Character, current_hp, max_hp, total_healed)
     """
     state = []
-    for character in combat.game_day.group.members.all():
+    for character in combat.group.members.all():
         current_hp, max_hp, total_h = character_state(combat, character)
         state.append((character, current_hp, max_hp, total_h))
         state.sort(key=lambda state: state[0].level, reverse=True)
