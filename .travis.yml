@@ -9,3 +9,9 @@ before_install:
 language: python
 python:
   - "3.5"
+# install dependencies
+install: 
+  - pip install -r requirements/test.txt
+# run tests
+script:
+  - pytest
