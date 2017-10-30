@@ -70,29 +70,31 @@ def add_heal(request, combat_pk, character_pk):
 
 
 def bandage_character(request, combat_pk, character_pk):
+    """
+        POST to this view with 'skill_level' in bandaging, and 
+        'bonus' hitpoints from superior tools to automatically bandage 
+        the character.
+    """    
     combat = get_object_or_404(Combat, pk=combat_pk)
     character = get_object_or_404(Character, pk=character_pk)
     if request.method == 'POST':
         bonus = int(request.POST['bonus'])
         skill_level = int(request.POST['skill_level'])
-    else:
-        bonus = 0
-        skill_level = 1
-    damage = 0
-    wounds = Wound.objects.filter(character=character, combat=combat, bandaged=False)
-    for wound in wounds:
-        damage += wound.amount
-        wound.bandaged = True
-        wound.save()
-    # level 1 (Rudimentary) = Heal 1 per 8 damage, plus bonus
-    # level 2 (Proficient) = Heal 1 per 7 damage, plus bonus
-    # level 3 (Expert) = Heal 1 per 6 damage, plus bonus
-    if damage > 0:
-        healing = math.ceil(damage * (1/(9-skill_level)))
-        healing += bonus
-        bandage = Wound(combat=combat, character=character, amount=-healing, bandaged=True)
-        bandage.save()
-    return manage_combat(request, combat_pk)
+        damage = 0
+        wounds = Wound.objects.filter(character=character, combat=combat, bandaged=False)
+        for wound in wounds:
+            damage += wound.amount
+            wound.bandaged = True
+            wound.save()
+        # level 1 (Rudimentary) = Heal 1 per 8 damage, plus bonus
+        # level 2 (Proficient) = Heal 1 per 7 damage, plus bonus
+        # level 3 (Expert) = Heal 1 per 6 damage, plus bonus
+        if damage > 0:
+            healing = math.ceil(damage * (1/(9-skill_level)))
+            healing += bonus
+            bandage = Wound(combat=combat, character=character, amount=-healing, bandaged=True)
+            bandage.save()
+    return redirect('tracker:manage', combat_pk)
 
 
 class CombatCreate(LoginRequiredMixin, CreateView):
@@ -106,7 +108,7 @@ class CombatCreate(LoginRequiredMixin, CreateView):
 def combat_state(combat):
     """
     Get the current state of each combatant in the group.  Returns
-    a list of (Character, current_hp, max_hp)
+    a list of tuples (Character, current_hp, max_hp, total_healed)
     """
     state = []
     for character in combat.game_day.group.members.all():

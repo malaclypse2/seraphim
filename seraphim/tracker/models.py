@@ -19,9 +19,6 @@ class Combat(models.Model):
     def __str__(self):
         return '{self.name}'.format(self=self)
 
-class Round(models.Model):
-    combat = models.ForeignKey(Combat, on_delete=models.CASCADE)
-
 class StatusEffectType(models.Model):
     typ = models.CharField(max_length=10)
     desc = models.CharField(max_length=200)
