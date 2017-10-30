@@ -25,3 +25,4 @@ class Character(models.Model):
         return '{self.name}, {self.profession}:{self.level} - {self.base_hp} HP'.format(self=self)
     def get_absolute_url(self):
         return reverse('character_edit', kwargs={'pk': self.pk})
+        

@@ -9,7 +9,7 @@ class Combat(models.Model):
     crt_dttm = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return '{self.name} - {self.group}'.format(self=self)
+        return '{self.name}'.format(self=self)
 
 class StatusEffectType(models.Model):
     typ = models.CharField(max_length=10)
