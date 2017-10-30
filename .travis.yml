@@ -12,6 +12,10 @@ python:
 # install dependencies
 install: 
   - pip install -r requirements/test.txt
+services:
+  - postgresql
+before_script: 
+  - psql -c 'create database seraphim;' -U postgres
 # run tests
 script:
   - pytest
