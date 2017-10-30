@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView, ListView, UpdateView, CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.template import loader
 
 from seraphim.characters.models import Character
@@ -12,6 +13,7 @@ from .forms import WoundForm, HealForm, CombatForm
 
 
 # Create your views here.
+@login_required
 def index(request):
     combat_list_in_progress = Combat.objects.filter(in_progress=True)
     combat_list_complete = Combat.objects.filter(in_progress=False)
@@ -21,6 +23,8 @@ def index(request):
     }
     return render(request, 'tracker/index.html', context)
 
+
+@login_required
 def manage_combat(request, pk):
     combat = get_object_or_404(Combat, pk=pk)
     context = {}
@@ -28,6 +32,8 @@ def manage_combat(request, pk):
     context['combat_state'] = combat_state(combat)
     return render(request, 'tracker/manage_combat.html', context)
 
+
+@login_required
 def character_detail(request, combat_pk, character_pk):
     context = {}
     combat = get_object_or_404(Combat, pk=combat_pk)
@@ -51,6 +57,7 @@ def character_detail(request, combat_pk, character_pk):
     })
     return render(request, 'tracker/character_detail.html', context)
 
+@login_required
 def add_wound(request, combat_pk, character_pk):
     if request.method == 'POST':
         form = WoundForm(request.POST)
@@ -60,6 +67,7 @@ def add_wound(request, combat_pk, character_pk):
     return redirect('tracker:manage', combat_pk)
 
 
+@login_required
 def add_heal(request, combat_pk, character_pk):
     if request.method == 'POST':
         form = HealForm(request.POST)
@@ -69,6 +77,7 @@ def add_heal(request, combat_pk, character_pk):
     return redirect('tracker:manage', combat_pk)
 
 
+@login_required
 def bandage_character(request, combat_pk, character_pk):
     """
         POST to this view with 'skill_level' in bandaging, and 
