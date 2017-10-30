@@ -15,6 +15,11 @@ class CharacterDetail(LoginRequiredMixin, DetailView):
 class CharacterList(LoginRequiredMixin, ListView):
     model = Character
     ordering = ['icon', 'name']
+    def get_queryset(self):
+        queryset = Character.objects.filter(public=True)
+        if self.request.user.is_authenticated():
+            queryset |= Character.objects.filter(owner = self.request.user)
+        return queryset
 
 class CharacterCreate(LoginRequiredMixin, CreateView):
     model = Character

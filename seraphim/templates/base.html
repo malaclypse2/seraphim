@@ -36,19 +36,15 @@
         <a class="navbar-brand" href="{% url 'home' %}">Seraphim</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
-            </li>
             {% if request.user.is_authenticated %}
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> Manage </a>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="{% url 'characters:list' %}">Characters</a>
-                  <a class="dropdown-item" href="{% url 'groups:list' %}">Groups</a>
-                </div>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'characters:list' %}">Characters</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'tracker:index' %}">Track Combat</a>
+                <a class="nav-link" href="{% url 'groups:list' %}">Groups</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'tracker:index' %}">Combat</a>
               </li>
             {% endif %}
           </ul>
