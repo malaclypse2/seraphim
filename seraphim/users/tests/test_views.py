@@ -32,9 +32,10 @@ class TestUserRedirectView(BaseUserTestCase):
         #     view.get_redirect_url(),
         #     '/users/testuser/'
         # )
+        # Redirect changed to /
         self.assertEqual(
             view.get_redirect_url(),
-            '/home'
+            '/'
         )
 
 
