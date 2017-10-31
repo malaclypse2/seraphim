@@ -36,7 +36,6 @@
         <a class="navbar-brand" href="{% url 'home' %}">Seraphim</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            {% if request.user.is_authenticated %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'characters:list' %}">Characters</a>
               </li>
@@ -46,7 +45,6 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'tracker:index' %}">Combat</a>
               </li>
-            {% endif %}
           </ul>
 
           <ul class="navbar-nav">

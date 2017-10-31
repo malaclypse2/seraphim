@@ -14,7 +14,6 @@ from .forms import WoundForm, HealForm, CombatForm
 
 
 # Create your views here.
-@login_required
 def index(request):
     combat_list_in_progress = Combat.objects.filter(in_progress=True)
     combat_list_complete = Combat.objects.filter(in_progress=False)
@@ -25,7 +24,6 @@ def index(request):
     return render(request, 'tracker/index.html', context)
 
 
-@login_required
 def manage_combat(request, pk):
     combat = get_object_or_404(Combat, pk=pk)
     state = combat_state(combat)
@@ -37,7 +35,6 @@ def manage_combat(request, pk):
     return render(request, 'tracker/manage_combat.html', context)
 
 
-@login_required
 def character_detail(request, combat_pk, character_pk):
     context = {}
     combat = get_object_or_404(Combat, pk=combat_pk)
@@ -80,9 +77,8 @@ def add_wound(request, combat_pk, character_pk):
     if request.method == 'POST':
         form = WoundForm(request.POST)
         if form.is_valid():
-            #process as needed
             form.save()
-    return redirect('tracker:manage', combat_pk)
+    return redirect('tracker:manage_character', combat_pk)
 
 
 @login_required
@@ -90,7 +86,6 @@ def add_heal(request, combat_pk, character_pk):
     if request.method == 'POST':
         form = HealForm(request.POST)
         if form.is_valid():
-            #process as needed
             form.save()
     return redirect('tracker:manage', combat_pk)
 
@@ -108,6 +103,7 @@ def bandage_character(request, combat_pk, character_pk):
         bonus = int(request.POST['bonus'])
         skill_level = int(request.POST['skill_level'])
         damage = 0
+        healing = 0
         wounds = Wound.objects.filter(character=character, combat=combat, bandaged=False)
         for wound in wounds:
             damage += wound.amount
@@ -121,7 +117,12 @@ def bandage_character(request, combat_pk, character_pk):
             healing += bonus
             bandage = Wound(combat=combat, character=character, amount=-healing, bandaged=True)
             bandage.save()
-    return redirect('tracker:manage', combat_pk)
+        if damage == 0:
+            messages.warning(request, 'All wounds were previously bandaged.')
+        else:
+            messages.info(request, 'Bandaged {} HP of {} damage.'.format(healing, damage))
+    # Redirect back to the character after bandaging, there may be more healing to do.
+    return redirect('tracker:manage_character', combat_pk, character_pk)
 
 
 class CombatCreate(LoginRequiredMixin, CreateView):

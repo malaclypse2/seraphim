@@ -102,7 +102,7 @@
             "cwd": "${workspaceRoot}",
             "args": [
                 "runserver",
-                "--noreload",
+                // "--noreload",
                 "--nothreading"
             ],
             "env": {},

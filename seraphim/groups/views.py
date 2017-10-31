@@ -15,7 +15,7 @@ class GroupDetail(LoginRequiredMixin, DetailView):
     pk = 'id'
 
 
-class GroupList(LoginRequiredMixin, ListView):
+class GroupList(ListView):
     model = Group
 
 
