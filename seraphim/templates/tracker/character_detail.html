@@ -1,8 +1,9 @@
 {% extends "tracker/base_character_header.html" %}
 {% block title %}Seraphim Combat Manager{% endblock %}
 {% load crispy_forms_tags %}
-{% block content %}
 
+
+{% block content %}
 <div class="btn-group" role="group" aria-label="actions">
     {% comment %} <a class="btn btn-danger" href="{% url 'tracker:manage_wound' combat.id character.id %}">wound</a> {% endcomment %}
     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#wound-modal">Wound</button>
@@ -16,20 +17,13 @@
         </div>
     </div>
 </div>
+{% endblock content %}
 
 
 
 
 
-
-
-
-
-
-
-
-
-
+{% block modal %}
 {% comment %} Modal dialog for adding a wound {% endcomment %}
 <div class="modal fade" id="wound-modal" tabindex="-1" role="dialog" aria-labelledby="woundModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -42,10 +36,6 @@
             </div>
             <form action="{% url 'tracker:add_wound' combat.id character.id %}" method="post"> {% csrf_token %}
                 <div class="modal-body">
-                    {% comment %} <div class="form-group">
-                        <label for="wound-amount">Amount</label>
-                        <input type="number" class="form-control" name="wound-amount" id="wound-amount">
-                    </div> {% endcomment %}
                     {% crispy woundform %}
                 </div>
                 <div class="modal-footer">
@@ -69,11 +59,7 @@
             </div>
             <form action="{% url 'tracker:add_heal' combat.id character.id %}" method="post"> {% csrf_token %}
                 <div class="modal-body">
-                    {% comment %}
-                    <div class="form-group">
-                        <label for="heal-amount">Amount</label>
-                        <input type="number" class="form-control" name="heal-amount" id="heal-amount">
-                    </div> {% endcomment %} {% crispy healform %}
+                    {% crispy healform %}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -106,8 +92,8 @@
                         </select>
                         <label for="bonus">Bonus healing</label>
                         <input type="number" class="form-control" name="bonus" id="bonus">
-                    </div> 
-                    
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -117,4 +103,4 @@
         </div>
     </div>
 </div>
-{% endblock content %}
+{% endblock modal %}

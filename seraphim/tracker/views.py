@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView, ListView, UpdateView, CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.template import loader
 
 from seraphim.characters.models import Character
@@ -27,9 +28,12 @@ def index(request):
 @login_required
 def manage_combat(request, pk):
     combat = get_object_or_404(Combat, pk=pk)
+    state = combat_state(combat)
+    state.sort(key=lambda state: state[0].name)
+    state.sort(key=lambda state: state[0].icon.sort_key)
     context = {}
     context['combat'] = combat
-    context['combat_state'] = combat_state(combat)
+    context['combat_state'] = state
     return render(request, 'tracker/manage_combat.html', context)
 
 
@@ -39,12 +43,26 @@ def character_detail(request, combat_pk, character_pk):
     combat = get_object_or_404(Combat, pk=combat_pk)
     character = get_object_or_404(Character, pk=character_pk)
     current_hp, max_hp, total_h = character_state(combat, character)
+    damage = max_hp.hp - current_hp.hp
+    remaining_h = max(max_hp.hp-total_h, 0)
+    if remaining_h == 0:
+        messages.error(request, '''
+            This character has already been healed for {} points today.  Any
+            further healing will require a CON save to avoid death!
+        '''.format(total_h, ))
+    elif remaining_h < damage:
+        messages.warning(request, '''
+            This character has {} damage, and has already taken {} points
+             of healing today.  Healing more than {} will require a CON 
+             save to take the remainder of the healing.
+        '''.format(damage, total_h, remaining_h))
     context['combat'] = combat
     context['character'] = character
     context['current_hp'] = current_hp
     context['max_hp'] = max_hp
-    context['damage'] = max_hp.hp - current_hp.hp
+    context['damage'] = damage
     context['total_h'] = total_h
+    context['remaining_h'] = remaining_h
     context['woundform'] = WoundForm({
         'character': character,
         'combat': combat,
@@ -53,7 +71,7 @@ def character_detail(request, combat_pk, character_pk):
     context['healform'] = HealForm({
         'character': character,
         'combat': combat,
-        'amount': 0,
+        'amount': min(remaining_h, damage),
     })
     return render(request, 'tracker/character_detail.html', context)
 
@@ -123,9 +141,6 @@ def combat_state(combat):
     for character in combat.group.members.all():
         current_hp, max_hp, total_h = character_state(combat, character)
         state.append((character, current_hp, max_hp, total_h))
-        state.sort(key=lambda state: state[0].level, reverse=True)
-        state.sort(
-            key=lambda state: state[1].max_hp - state[1].hp, reverse=True)
     return state
 
 def character_state(combat, character):
