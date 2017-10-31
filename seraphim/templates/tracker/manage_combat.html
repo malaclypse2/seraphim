@@ -7,14 +7,14 @@
         {% for character, current_hp, max_hp, total_h in combat_state %}
         <a class="col-md-6 mb-2 nodecor" href="{% url 'tracker:manage_character' combat.id character.id %}" style="background-color:white;">
             <!--- Outer Card -->
-            <div class="row">
+            <div class="row {{current_hp.outer_style}}">
                 <div class="col-3" style="background-color:white;">
                     <!--- Left Side Icon -->
                     <img class="img img-responsive" src="/{{character.icon.url}}" />
                 </div>
                 <div class="col-9" style="background-color:aliceblue;">
                     <!--- Right Side Info -->
-                    <h3>{{character.name}}</h3>
+                    <h3 class="">{{character.name}}</h3>
                     <div class="row">
                         <div class="col-7">
                             {{character.av_short}}
@@ -30,4 +30,18 @@
         {% endfor %}
     </div>
 </div>
+
+{% comment %} <div class="btn-group" role="group" aria-label="actions">
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#wound-modal">Wound</button>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#heal-modal">Heal</button>
+    <div class="btn-grp" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false"> Other </button>
+        <div class="dropdown-menu " aria-labelledby="btnGroupDrop1">
+            <a class="btn btn-info" href="#">Effects</a>
+            <button class="btn btn-info" data-toggle="modal" data-target="#bandage-modal">Bandage</button>
+        </div>
+    </div>
+</div> {% endcomment %}
+
 {% endblock content %}

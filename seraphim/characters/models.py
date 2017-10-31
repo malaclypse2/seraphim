@@ -4,8 +4,10 @@ from django.core.urlresolvers import reverse
 # Create your models here.
 class CharacterIcon(models.Model):
     url = models.CharField(max_length=200)
+    name = models.CharField(max_length=50)
+    sort_key = models.IntegerField(default=999)
     def __str__(self):
-        return self.url.rsplit('/', 1)[1]
+        return '[{self.sort_key:03d}] {self.name}'.format(self=self)
 
 class Character(models.Model):
     name = models.CharField(max_length=200)
@@ -18,8 +20,8 @@ class Character(models.Model):
     profession = models.CharField('class', max_length=50)
     level = models.IntegerField()
     base_hp = models.IntegerField()
-    av_short = models.CharField(max_length=50, default='AV: ')
-    av_long = models.TextField(blank=True)
+    av_short = models.CharField('AV (Short)', max_length=50, default='AV: ')
+    av_long = models.TextField('AV (Long), and other notes.', blank=True)
     campaign_status = models.TextField(blank=True)
     def __str__(self):
         return '{self.name}, {self.profession}:{self.level} - {self.base_hp} HP'.format(self=self)

@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, HiddenInput, MultipleHiddenInput
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, HTML, Field, Hidden, Div
 from crispy_forms.bootstrap import FormActions
@@ -13,11 +13,11 @@ class WoundForm(ModelForm):
         self.helper.form_tag = False
         # Hide the Combat and Player inputs, if this is a bound form
         if self.is_bound:
-            self.helper[0:2].wrap(Div, css_class="d-none")
+            self.helper[1:3].wrap(Div, css_class="d-none")
 
     class Meta:
         model = Wound
-        fields = '__all__'
+        fields = ['amount', 'combat', 'character']
 
 
 class HealForm(ModelForm):

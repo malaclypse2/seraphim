@@ -187,3 +187,10 @@ class Current_hp:
         else:
             style = " text-danger "
         return style
+
+    def outer_style(self):
+        style = ""
+        pct = self.hp / self.max_hp
+        if pct < 0.00:
+            style = "text-muted"
+        return style

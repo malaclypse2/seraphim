@@ -26,6 +26,9 @@ class CharacterCreate(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('characters:list')
     form_class = CharacterForm
 
+    def get_initial(self):
+        return {'owner': self.request.user}
+
 class CharacterUpdate(LoginRequiredMixin, UpdateView):
     model = Character
     success_url = reverse_lazy('characters:list')
