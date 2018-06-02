@@ -78,7 +78,7 @@ def add_wound(request, combat_pk, character_pk):
         form = WoundForm(request.POST)
         if form.is_valid():
             form.save()
-    return redirect('tracker:manage_character', combat_pk)
+    return redirect('tracker:manage', combat_pk)
 
 
 @login_required
